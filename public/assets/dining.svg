@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="400" viewBox="0 0 600 400" preserveAspectRatio="xMidYMid slice">
+<defs>
+<linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+<stop offset="0" stop-color="#d8c3b0"/><stop offset="1" stop-color="#a07d63"/>
+</linearGradient>
+<linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+<stop offset="0" stop-color="#bfe0f5"/><stop offset="1" stop-color="#e9f3fa"/>
+</linearGradient>
+</defs>
+<rect width="600" height="400" fill="url(#g)"/>
+
+<text x="300.0" y="384" font-family="Plus Jakarta Sans,system-ui,sans-serif" font-size="13" font-weight="700" fill="#ffffff" fill-opacity="0.72" text-anchor="middle" letter-spacing="0.5">Dining</text>
+</svg>
