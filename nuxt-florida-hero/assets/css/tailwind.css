@@ -1,0 +1,267 @@
+/* ==========================================================================
+   Tailwind CSS v4 entry
+   ========================================================================== */
+@import "tailwindcss";
+
+/* ==========================================================================
+   FONTS — Poppins (brand typeface). Files served from /public/fonts.
+   SemiBold (600) is the heaviest weight in this system.
+   ========================================================================== */
+@font-face { font-family: "Poppins"; font-weight: 300; font-style: normal; font-display: swap; src: url("/fonts/Poppins-Light.ttf") format("truetype"); }
+@font-face { font-family: "Poppins"; font-weight: 400; font-style: normal; font-display: swap; src: url("/fonts/Poppins-Regular.ttf") format("truetype"); }
+@font-face { font-family: "Poppins"; font-weight: 500; font-style: normal; font-display: swap; src: url("/fonts/Poppins-Medium.ttf") format("truetype"); }
+@font-face { font-family: "Poppins"; font-weight: 600; font-style: normal; font-display: swap; src: url("/fonts/Poppins-SemiBold.ttf") format("truetype"); }
+
+/* ==========================================================================
+   BASE RESET (ported verbatim from the source design)
+   ========================================================================== */
+* { box-sizing: border-box; }
+body { margin: 0; font-family: "Poppins", system-ui, -apple-system, "Segoe UI", sans-serif; color: #202020; background: #fff; -webkit-font-smoothing: antialiased; line-height: 1.5; }
+img { max-width: 100%; display: block; }
+a { color: #0B5AA5; text-decoration: none; }
+a:hover { color: #0E5293; }
+button { font-family: inherit; cursor: pointer; }
+ul, ol { margin: 0; padding: 0; list-style: none; }
+h1, h2, h3, h4, h5, p { margin: 0; }
+h1, h2, h3, h4, h5 { font-weight: 600; color: #202020; }
+input, select { font-family: inherit; }
+::placeholder { color: #696969; }
+:focus-visible { outline: 2px solid #0B5AA5; outline-offset: 2px; }
+
+/* ==========================================================================
+   KEYFRAMES used by the hero
+   ========================================================================== */
+@keyframes hzLiveRing { 0% { transform: scale(.55); opacity: .85; } 80% { transform: scale(4.2); opacity: 0; } 100% { transform: scale(4.2); opacity: 0; } }
+@keyframes hzLiveCore { 0%, 100% { box-shadow: 0 0 0 0 rgba(52,214,122,.55), 0 0 8px 2px rgba(52,214,122,.45); opacity: 1; } 50% { box-shadow: 0 0 0 3px rgba(52,214,122,.10), 0 0 14px 4px rgba(52,214,122,.75); opacity: .92; } }
+@keyframes hzGlowHot { 0% { box-shadow: 0 0 0 0 rgba(242,113,28,.85), 0 0 12px 3px rgba(242,113,28,.75); transform: scale(1); } 45% { box-shadow: 0 0 0 10px rgba(242,113,28,0), 0 0 22px 7px rgba(242,113,28,.9); transform: scale(1.25); } 100% { box-shadow: 0 0 0 0 rgba(242,113,28,0), 0 0 12px 3px rgba(242,113,28,.75); transform: scale(1); } }
+@keyframes hzIcoDraw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+@keyframes hzBioIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ==========================================================================
+   BREADCRUMB
+   ========================================================================== */
+.hz-dcrumb { color: rgba(255,255,255,.65); transition: color .18s ease; }
+.hz-dcrumb:hover { color: #fff; }
+
+/* ==========================================================================
+   SHARES POPOVER — floating menu anchored to the Shares button.
+   position:fixed (JS-placed) so no hero overflow can clip it.
+   ========================================================================== */
+.hz-shr-wrap { position: relative; }
+.hz-shr-pop { position: fixed; top: 0; left: 0; width: 240px; padding-top: 11px; opacity: 0; transform: translateY(-6px); pointer-events: none; transition: opacity .17s ease-out, transform .17s ease-out; z-index: 9999; }
+.hz-shr-wrap:hover .hz-shr-pop, .hz-shr-wrap:focus-within .hz-shr-pop { opacity: 1; transform: translateY(0); pointer-events: auto; }
+.hz-shr-card { position: relative; width: 240px; background: #fff; border: 1px solid #E6E8EB; border-radius: 12px; box-shadow: 0 12px 32px rgba(0,0,0,.18); display: flex; flex-direction: column; overflow: hidden; }
+.hz-shr-tail { position: absolute; top: 6px; left: 50%; width: 11px; height: 11px; background: #fff; border-left: 1px solid #E6E8EB; border-top: 1px solid #E6E8EB; transform: translateX(-50%) rotate(45deg); border-radius: 2px 0 0 0; pointer-events: none; }
+.hz-shr-row { display: flex; align-items: center; gap: 12px; height: 48px; padding: 0 16px; background: none; border: none; font: 500 14px/1 Poppins, sans-serif; color: #333; white-space: nowrap; text-align: left; text-decoration: none; cursor: pointer; transition: background .13s ease-out; }
+.hz-shr-row + .hz-shr-row { border-top: 1px solid #EDEFF2; }
+.hz-shr-row:hover { background: #EFF4FA; color: #333; }
+.hz-shr-row svg { flex: 0 0 20px; }
+.hz-shr-toast { position: absolute; top: calc(100% + 14px); left: 50%; transform: translate(-50%, 4px); opacity: 0; pointer-events: none; transition: opacity .15s ease-out, transform .15s ease-out; background: #202020; color: #fff; font: 500 12px/1 Poppins, sans-serif; padding: 7px 12px; border-radius: 8px; white-space: nowrap; z-index: 10000; }
+.hz-shr-toast[data-on="1"] { opacity: 1; transform: translate(-50%, 0); }
+
+/* ==========================================================================
+   HOT POST + LIVE indicators
+   ========================================================================== */
+.hz-glow-hot { animation: hzGlowHot 2.6s ease-in-out infinite; }
+.hz-live-ring { animation: hzLiveRing 2.4s cubic-bezier(.16,.7,.3,1) infinite; will-change: transform, opacity; }
+.hz-live-ring2 { animation-delay: 1.2s; }
+.hz-live-core { animation: hzLiveCore 2.4s ease-in-out infinite; will-change: box-shadow; }
+
+/* ==========================================================================
+   PREMIUM REVEAL (entrance) animation
+   ========================================================================== */
+.hz-rv { opacity: 0; transform: translateY(26px); transition: opacity .75s cubic-bezier(.22,1,.36,1), transform .75s cubic-bezier(.22,1,.36,1); }
+.hz-rv.hz-in { opacity: 1; transform: none; }
+.hz-rv-d1 { transition-delay: .09s; }
+.hz-rv-d2 { transition-delay: .18s; }
+
+/* ==========================================================================
+   BYLINE BIO POPOVERS — own fixed floating layer, JS-positioned.
+   ========================================================================== */
+.hz-bio-pop { position: fixed !important; left: var(--hz-left, 0px) !important; right: auto !important; top: var(--hz-top, 0px) !important; z-index: 2147483000;
+  opacity: 0; visibility: hidden; pointer-events: none; transform: translateY(8px);
+  transition: opacity .18s ease-out, transform .2s cubic-bezier(.22,1,.36,1), visibility .2s; }
+.hz-bio-wrap[data-open="1"] .hz-bio-pop { opacity: 1; visibility: visible; transform: translateY(0); pointer-events: auto; }
+/* caret = rotated square welded onto the card */
+.hz-bio-pop > span:first-child { left: var(--hz-arrow, 22px) !important; right: auto !important; top: 4px !important;
+  width: 14px !important; height: 14px !important; background: #16223A !important;
+  border-left: 1px solid rgba(255,255,255,.10) !important; border-top: 1px solid rgba(255,255,255,.10) !important;
+  border-right: 0 !important; border-bottom: 0 !important; border-radius: 3px 0 0 0 !important;
+  box-shadow: none !important; z-index: 2; }
+.hz-bio-pop > div { z-index: 1; }
+.hz-bio-ico:hover { background: rgba(90,169,248,.14); border-color: rgba(90,169,248,.55); }
+.hz-viewprofile:hover { background: rgba(90,169,248,.14) !important; border-color: #8CC3FB !important; color: #CFE6FE !important; }
+
+/* ==========================================================================
+   CTA BUTTONS
+   ========================================================================== */
+.hz-dun { transition: background-color .2s ease, border-color .2s ease, box-shadow .2s ease; }
+.hz-dun:hover { background: rgba(255,255,255,.12); border-color: rgba(255,255,255,.5); box-shadow: 0 10px 28px -14px rgba(140,200,255,.5); }
+.hz-ctarow > a { transition: transform .2s cubic-bezier(.22,.61,.36,1), box-shadow .2s ease, background-color .2s ease, border-color .2s ease, filter .2s ease; }
+.hz-ctarow > a:hover { transform: translateY(-3px); }
+.hz-ctarow > a.hz-fill:hover { box-shadow: 0 14px 28px -10px rgba(40,118,193,.65); }
+.hz-ctarow > a.hz-dun:hover { box-shadow: 0 14px 30px -14px rgba(140,200,255,.55); }
+.hz-ctarow > a:active { transform: translateY(-1px) scale(.99); }
+.hz-fill:hover { filter: brightness(1.06); }
+.hz-fill:active { transform: scale(.985); }
+
+/* ==========================================================================
+   HERO PHOTO + STAT CARDS
+   ========================================================================== */
+.hz-dphoto image-slot, .hz-dphoto img { filter: contrast(1.12) saturate(1.14) brightness(1.03); }
+.hz-dstat { position: relative; isolation: isolate; background: rgba(10,24,40,.86); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,.14); box-shadow: 0 10px 24px -10px rgba(0,0,0,.55), 0 2px 6px -2px rgba(0,0,0,.45); transition: transform .3s cubic-bezier(.22,1,.36,1), box-shadow .3s cubic-bezier(.22,1,.36,1), background-color .3s cubic-bezier(.22,1,.36,1), border-color .3s cubic-bezier(.22,1,.36,1); }
+.hz-dstat::after { content: ""; position: absolute; left: 12%; right: 12%; bottom: -16px; height: 34px; border-radius: 50%; background: radial-gradient(closest-side, rgba(47,128,237,.5), rgba(47,128,237,0) 76%); filter: blur(12px); opacity: 0; transition: opacity .3s cubic-bezier(.22,1,.36,1); pointer-events: none; z-index: -1; }
+.hz-dstat:hover { transform: translateY(-8px); background: rgba(16,37,61,.93); border-color: #2F80ED; box-shadow: 0 28px 56px -20px rgba(0,0,0,.62), 0 10px 22px -12px rgba(11,90,165,.55), 0 2px 5px -2px rgba(0,0,0,.4); }
+.hz-dstat:hover::after { opacity: 1; }
+.hz-dstat .hz-dstat-ico { position: relative; background: linear-gradient(160deg, #3B82F6, #2563EB); border: 1px solid rgba(255,255,255,.26); border-radius: 50% !important; box-shadow: inset 0 1px 0 rgba(255,255,255,.34), inset 0 -6px 12px -6px rgba(0,0,0,.4), 0 6px 14px -6px rgba(37,99,235,.65); transition: transform .3s cubic-bezier(.22,1,.36,1), box-shadow .3s cubic-bezier(.22,1,.36,1); }
+.hz-dstat .hz-dstat-ico::before { content: ""; position: absolute; inset: -9px; border-radius: 50%; background: radial-gradient(closest-side, rgba(59,130,246,.62), rgba(59,130,246,0) 74%); opacity: 0; transition: opacity .3s cubic-bezier(.22,1,.36,1); pointer-events: none; }
+.hz-dstat:hover .hz-dstat-ico { transform: scale(1.06); box-shadow: inset 0 1px 0 rgba(255,255,255,.42), inset 0 -6px 12px -6px rgba(0,0,0,.36), 0 10px 22px -8px rgba(37,99,235,.8); }
+.hz-dstat:hover .hz-dstat-ico::before { opacity: 1; }
+.hz-dstat-ico svg { display: block; width: 22px; height: 22px; stroke: #FFFFFF; stroke-width: 1.7; vector-effect: non-scaling-stroke; stroke-linecap: round; stroke-linejoin: round; fill: none; overflow: visible; shape-rendering: geometricPrecision; }
+.hz-dstat-ico svg [data-dt] { stroke: none; fill: rgba(255,255,255,.3); }
+.hz-dstat-ico svg [data-ln] { stroke-dasharray: 1; stroke-dashoffset: 0; }
+.hz-dstat:hover .hz-dstat-ico svg [data-ln] { animation: hzIcoDraw .62s cubic-bezier(.22,1,.36,1) both; }
+.hz-dstat span[data-count] { transition: transform .3s cubic-bezier(.22,1,.36,1), opacity .3s cubic-bezier(.22,1,.36,1); }
+.hz-dstat:hover span[data-count] { transform: translateY(-2px); opacity: 1; }
+.hz-dstat .hz-dstat-label { opacity: .85; transition: opacity .3s cubic-bezier(.22,1,.36,1); }
+.hz-dstat:hover .hz-dstat-label { opacity: 1; }
+.hz-dstat-label { color: #FFFFFF !important; }
+
+/* ==========================================================================
+   SOURCE CHIPS (MLS / FBI / Census / BLS)
+   ========================================================================== */
+.hz-dpchip { display: inline-flex; align-items: center; padding: 3px 10px; border-radius: 999px; background: transparent; border: 1px solid rgba(255,255,255,.16); color: rgba(255,255,255,.72); font-size: 12px; font-weight: 500; letter-spacing: .2px; transition: color .18s ease, border-color .18s ease; }
+.hz-dpchip:hover { color: #fff; border-color: rgba(255,255,255,.34); }
+a.hz-dpchip { text-decoration: none; cursor: pointer; transition: transform .18s cubic-bezier(.22,1,.36,1), box-shadow .18s ease, background .18s ease, border-color .18s ease, color .18s ease; }
+a.hz-dpchip:hover { transform: translateY(-2px); background: rgba(120,190,255,.12); border-color: rgba(120,190,255,.45); box-shadow: 0 10px 22px -12px rgba(0,0,0,.75); }
+a.hz-dpchip:active { transform: translateY(0); }
+.hz-dpchip b { font-size: 10px; font-weight: 600; letter-spacing: .5px; color: #8FC8FF; background: rgba(120,190,255,.14); border: 1px solid rgba(120,190,255,.2); border-radius: 999px; padding: 3px 8px; }
+
+/* ==========================================================================
+   RESPONSIVE — behaviour ported from the source, hero rules only.
+   ========================================================================== */
+
+/* --- tablet / small desktop: hero grid becomes a single column --- */
+@media (max-width: 1024px) {
+  .hz-hero-grid { grid-template-columns: 1fr !important; }
+}
+@media (min-width: 768px) and (max-width: 1024px) {
+  .hz-hero-grid > div:first-child { padding-bottom: 8px !important; }
+  .hz-hero-grid > div:first-child > p { max-width: 66ch !important; }
+  .hz-hero-grid > div:first-child > .hz-ctarow { margin-top: 0 !important; max-width: 420px !important; }
+  #hz-hero-photo-a { margin-left: 0 !important; }
+  #hz-hero-photo-a + div[aria-hidden] { left: 0 !important; }
+  .hz-herostats { left: 24px !important; }
+}
+
+/* --- source chips hide when the strip gets tight --- */
+@media (max-width: 900px) {
+  .hz-srcrow { display: none !important; }
+}
+
+/* --- stat cards go single-column, breadcrumb row tightens --- */
+@media (max-width: 680px) {
+  .hz-herostats { grid-template-columns: 1fr !important; }
+  .hz-crumbrow { gap: 12px !important; }
+}
+
+/* ============================= MOBILE (<768px) =============================
+   Reading order is rebuilt: breadcrumb -> engagement -> headline ->
+   photo w/ stats -> byline -> copy -> CTAs -> live-MLS strip. */
+@media (max-width: 767px) {
+  html, body { overflow-x: clip !important; }
+  [style*="max-width:1240px"], [style*="max-width: 1240px"] { padding-left: 16px !important; padding-right: 16px !important; }
+
+  #hz-main > section:first-child { padding: 12px 0 30px !important; }
+  .hz-crumbrow { flex-direction: column !important; align-items: flex-start !important; gap: 9px !important; margin-bottom: 12px !important; }
+  nav[aria-label="Breadcrumb"] ol { flex-wrap: wrap !important; row-gap: 4px !important; font-size: 12px !important; gap: 7px !important; }
+
+  /* engagement row: a real wrapping flex row */
+  .hz-engage { display: flex !important; flex: 1 1 100% !important; width: 100% !important; max-width: 100% !important;
+    padding-left: 0 !important; justify-content: flex-start !important; align-items: center !important;
+    flex-wrap: wrap !important; overflow: visible !important; gap: 12px !important; font-size: 12px !important; }
+  .hz-engage > span { flex: 0 0 auto !important; min-width: 0 !important; }
+  .hz-engage > span[aria-hidden] { display: none !important; }
+  .hz-engage > span:last-child { font-size: 10px !important; padding: 5px 8px !important; white-space: nowrap !important; }
+
+  .hz-hero-grid { display: flex !important; flex-direction: column !important; gap: 12px !important; align-items: stretch !important; }
+  .hz-hero-grid > div:first-child { display: contents !important; }
+  .hz-hero-grid > div:first-child > h1 { order: 1 !important; font-size: 24px !important; line-height: 1.07 !important; letter-spacing: -1px !important; margin: 0 !important; }
+  .hz-hero-grid > div:last-child { order: 3 !important; }
+  .hz-hero-grid > div:first-child > p { order: 2 !important; font-size: 15px !important; line-height: 1.6 !important; max-width: 100% !important; margin: 0 !important; }
+  /* byline: keep the pill box, allow it to wrap onto two lines */
+  .hz-hero-grid > div:first-child > div:nth-child(3) { order: 4 !important; display: flex !important; flex-wrap: wrap !important;
+    justify-content: flex-start !important; align-items: center !important; white-space: normal !important;
+    row-gap: 8px !important; column-gap: 10px !important; width: auto !important; max-width: 100% !important;
+    line-height: 1.5 !important; font-size: 12px !important; border-radius: 20px !important; padding: 8px 14px 8px 8px !important; }
+  .hz-hero-grid > div:first-child > div:nth-child(3) > span { flex: 0 1 auto !important; max-width: 100% !important; align-items: center !important; white-space: normal !important; }
+  .hz-hero-grid > div:first-child > div:nth-child(3) svg { width: 11px !important; height: 11px !important; flex-shrink: 0 !important; }
+  .hz-hero-grid > div:first-child > div:nth-child(3) > span > img { width: 18px !important; height: 18px !important; }
+  .hz-hero-grid > div:first-child > div:nth-child(3) > span[aria-hidden] { display: none !important; }
+  .hz-hero-grid > div:first-child > .hz-ctarow { order: 5 !important; margin-top: 0 !important; }
+
+  /* photo: full-width rounded card, stats stay ON the image at phone scale */
+  #hz-hero-photo-a { height: 270px !important; margin-left: 0 !important; border-radius: 20px !important; }
+  #hz-hero-photo-a + div[aria-hidden] { left: 0 !important; right: 0 !important; height: 270px !important; border-radius: 20px !important;
+    background: linear-gradient(0deg, rgba(5,15,27,.93) 0%, rgba(5,15,27,.80) 26%, rgba(5,15,27,.34) 56%, rgba(5,15,27,.08) 100%) !important; }
+  .hz-herostats { position: absolute !important; left: 10px !important; right: 10px !important; bottom: 10px !important; top: auto !important;
+    grid-template-columns: 1fr 1fr !important; grid-auto-rows: auto !important; gap: 9px !important; margin-top: 0 !important; }
+  .hz-dstat { gap: 8px !important; padding: 7px 9px !important; min-height: 0 !important; border-radius: 12px !important; }
+  .hz-dstat { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
+  .hz-dstat-ico { width: 28px !important; height: 28px !important; border-radius: 50% !important; flex-shrink: 0 !important; filter: none !important; transform: none !important; }
+  .hz-dstat:hover .hz-dstat-ico { transform: none !important; }
+  .hz-dstat-ico svg { width: 20px !important; height: 20px !important; display: block !important; flex-shrink: 0 !important; stroke-width: 1.8 !important; overflow: visible !important; shape-rendering: geometricPrecision !important; text-rendering: geometricPrecision !important; }
+  .hz-dstat span[data-count] { font-size: 16px !important; letter-spacing: -.2px !important; }
+  .hz-dstat-label { font-size: 10px !important; line-height: 1.3 !important; }
+
+  /* byline popovers must not exceed the viewport */
+  .hz-bio-pop { width: min(322px, calc(100vw - 40px)) !important; left: 0 !important; }
+
+  .hz-ctarow { grid-template-columns: 1fr !important; max-width: 100% !important; gap: 10px !important; }
+  .hz-ctarow > a { height: 50px !important; font-size: 16px !important; width: 100% !important; }
+
+  /* trust bar: stacks and wraps instead of one clipped row */
+  .hz-mlsstrip { flex-direction: column !important; align-items: flex-start !important; gap: 12px !important; }
+  .hz-mrot { height: auto !important; min-height: 40px !important; width: 100% !important; }
+  .hz-mrot > span { position: static !important; flex-wrap: wrap !important; white-space: normal !important; justify-content: flex-start !important; row-gap: 4px !important; line-height: 1.5 !important; }
+  .hz-srcrow { display: flex !important; flex-wrap: wrap !important; row-gap: 8px !important; width: 100% !important; }
+  a.hz-dpchip { min-height: 28px !important; }
+
+  /* hover cards sized for the viewport (final override) */
+  .hz-bio-pop { width: calc(100vw - 24px) !important; max-width: 344px !important; }
+
+  p { text-wrap: pretty; }
+  a, button { -webkit-tap-highlight-color: transparent; }
+}
+
+/* --- narrow phones --- */
+@media (max-width: 409px) {
+  .hz-engage { gap: 10px !important; }
+}
+@media (max-width: 389px) {
+  .hz-engage { gap: 10px 12px !important; }
+  .hz-hero-grid > div:first-child > div:nth-child(3) { row-gap: 8px !important; }
+}
+@media (max-width: 339px) {
+  .hz-engage, .hz-hero-grid > div:first-child > div:nth-child(3) { column-gap: 10px !important; }
+  .hz-dstat { padding: 7px 8px !important; }
+}
+
+/* --- tablet band (768-1023px): hero grid stays single column --- */
+@media (min-width: 768px) and (max-width: 1023px) {
+  html, body { overflow-x: clip !important; }
+  .hz-hero-grid { grid-template-columns: 1fr !important; }
+}
+
+/* ==========================================================================
+   REDUCED MOTION
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: .001ms !important; transition-duration: .001ms !important; }
+  .hz-rv { opacity: 1 !important; transform: none !important; }
+  .hz-glow-hot, .hz-live-ring, .hz-live-core { animation: none !important; }
+  .hz-shr-pop, .hz-shr-wrap:hover .hz-shr-pop { transition: opacity .12s linear; transform: none; }
+  .hz-bio-pop { transition: none; }
+  .hz-dstat, .hz-dstat:hover, .hz-dstat .hz-dstat-ico, .hz-dstat:hover .hz-dstat-ico, .hz-dstat span[data-count], .hz-dstat:hover span[data-count] { transform: none !important; }
+  .hz-dstat:hover .hz-dstat-ico svg [data-ln] { animation: none !important; }
+}
