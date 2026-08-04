@@ -1,0 +1,48 @@
+/* ============================================================================
+   Tailwind CSS v4 entry point.
+
+   This file intentionally contains NO element styling — every visual rule in
+   the app is expressed with Tailwind utility classes in the components.
+   What lives here is only:
+     1. the Tailwind import (required to generate the utilities),
+     2. the brand font registration (self-hosted Poppins asset loading), and
+     3. theme tokens that back Tailwind utilities such as `font-poppins`.
+   ========================================================================== */
+
+@import "tailwindcss";
+
+/* Theme tokens — these back Tailwind utilities (e.g. the `font-poppins` class).
+   Poppins is the Houzeo brand typeface; SemiBold (600) is the weight cap. */
+@theme {
+  --font-poppins: "Poppins", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+/* Self-hosted brand font registration (asset loading, not element styling). */
+@font-face {
+  font-family: "Poppins";
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+  src: url("../fonts/Poppins-Light.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Poppins";
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  src: url("../fonts/Poppins-Regular.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Poppins";
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+  src: url("../fonts/Poppins-Medium.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Poppins";
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+  src: url("../fonts/Poppins-SemiBold.ttf") format("truetype");
+}

@@ -1,0 +1,23 @@
+{
+  "name": "houzeo-florida-hero",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Houzeo — Best Places to Live in Florida hero, rebuilt with Nuxt 3, Vue 3 Composition API and Tailwind CSS v4.",
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "dependencies": {
+    "nuxt": "^3.13.0",
+    "vue": "^3.5.0",
+    "vue-router": "^4.4.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.3.0",
+    "tailwindcss": "^4.3.0"
+  }
+}
