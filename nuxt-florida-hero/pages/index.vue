@@ -3,7 +3,7 @@ import HeroSection from '~/components/HeroSection.vue'
 </script>
 
 <template>
-  <main id="hz-main" style="display:flow-root">
+  <main id="hz-main" class="flow-root">
     <HeroSection />
   </main>
 </template>

@@ -17,6 +17,8 @@ export default defineNuxtConfig({
     head: {
       title: 'Best Places to Live in Florida',
       htmlAttrs: { lang: 'en' },
+      // Base page styling applied with Tailwind utility classes (no CSS reset needed).
+      bodyAttrs: { class: 'font-poppins bg-white text-[#202020] antialiased' },
       meta: [
         { charset: 'utf-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
